@@ -2,8 +2,27 @@
 
 Bootc bootstrap image for my laptop LeLoi.     
 LeLoi is ThinkPad P14s Gen 6 lapotop comes with Ryzen AMD Ryzen AI 9 HX 370 Processor.  
-https://psref.lenovo.com/Product/ThinkPad/ThinkPad_P14s_Gen_6_AMD
-LeLoi comes with AMD Ryzen™ AI 9 HX PRO 370 and 14" WUXGA (1920 x 1200), IPS 60Hz screen.  
+https://psref.lenovo.com/Product/ThinkPad/ThinkPad_P14s_Gen_6_AMD  
+LeLoi comes with AMD Ryzen™ AI 9 HX PRO 370 and 14" WUXGA (1920 x 1200), IPS 60Hz screen.
 
+How to create boot image:  
+```
+$ sudo podman build -t leloi-linux .
+```
+
+How to create bootable iso to install to bare metal machine: 
+```
+$ sudo podman run --rm -it --privileged --pull=newer \
+  --security-opt label=type:unconfined_t \
+  -v ./output:/output \
+  -v /var/lib/containers/storage:/var/lib/containers/storage \
+  -v ./config.toml:/config.toml:ro \
+  quay.io/centos-bootc/bootc-image-builder:latest \
+  --type iso \
+  --chown 1000:1000 \
+  localhost/leloi-linux
+```  
+
+ 
 
   
