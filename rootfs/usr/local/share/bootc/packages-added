@@ -2,6 +2,7 @@
 # List of packages to install on top of base image
 ####################################################
 
+xorg-x11-server-Xorg
 emacs-gtk+x11
 arandr
 blueman
