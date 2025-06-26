@@ -1,8 +1,10 @@
-LeLoi Linux 
+# LeLoi Linux 
 
-Bootc image for my laptop LeLoi. 
+Bootc image for my laptop LeLoi.   
+LeLoi is ThinkPad P14s Gen 6 lapotop comes with Ryzen AMD Ryzen AI 9 HX 370 Processor.
+The Lenovo's Product Specifications Reference(PSREF) can be obtained here: https://psref.lenovo.com/Product/ThinkPad/ThinkPad_P14s_Gen_6_AMD
+LeLoi comes with AMD Ryzen™ AI 9 HX PRO 370 and 14" WUXGA (1920 x 1200), IPS 60Hz screen.  
 
-LeLoi is ThinkPad P14s Gen 6 lapotop comes with Ryzen AMD Ryzen™ AI 9 HX PRO 370 Processor (2.00 GHz up to 5.10 GHz Max Boost, 12 Cores, 24 Threads, 24 MB Cache).
 I use Gnome from Fedora Silverblue and LeftWm.  
 
 
