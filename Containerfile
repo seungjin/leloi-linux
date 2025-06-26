@@ -24,7 +24,7 @@ RUN cat /usr/local/share/bootc/packages-added | grep "^[^#;]" | xargs dnf -y ins
 
 # REMOVE PACKAGES
 #RUN grep -vE '^#' /usr/local/share/bootc/packages-removed | xargs dnf -y remove
-RUN cat /usr/local/share/bootc/packages-removed | grep "^[^#;]" | xargs dnf -y remove --allowerasing
+RUN cat /usr/local/share/bootc/packages-removed | grep "^[^#;]" | xargs dnf -y remove
 RUN dnf -y autoremove
 RUN dnf clean all
 
