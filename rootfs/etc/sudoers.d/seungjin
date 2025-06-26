@@ -1,0 +1,1 @@
+seungjin ALL=(ALL) NOPASSWD:/usr/bin/systemctl start vpn-seungjin, /usr/bin/systemctl stop vpn-seungjin, /usr/bin/systemctl restart vpn-seungjin, /usr/sbin/tuned-adm

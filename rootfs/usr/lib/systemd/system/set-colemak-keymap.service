@@ -1,0 +1,10 @@
+[Unit]
+Description=Force Colemak keymap on virtual console
+After=local-fs.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/loadkeys us-colemak
+
+[Install]
+WantedBy=multi-user.target

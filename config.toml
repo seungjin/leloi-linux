@@ -1,0 +1,41 @@
+[customizations.installer.kickstart]
+contents = """
+graphical
+#text 
+
+# Keyboard layouts
+keyboard --vckeymap=us-colemak --xlayouts='us (colemak)'
+# System language
+lang en_US.UTF-8
+
+# Firewall configuration
+firewall --use-system-defaults
+
+#ignoredisk --only-use=nvme0n1
+# Partition clearing information
+clearpart --drives=nvme0n1 --all --initlabel
+zerombr
+# Disk partitioning information
+part btrfs.6072 --fstype="btrfs" --ondisk=nvme0n1 --size=10240 --grow --encrypted --luks-version=luks2
+part /boot/efi --fstype="efi" --ondisk=nvme0n1 --size=614 --fsoptions="umask=0077,shortname=winnt"
+part /boot --fstype="ext4" --ondisk=nvme0n1 --size=1024
+btrfs none --label=leloi --data=single btrfs.6072
+btrfs / --subvol --name=root LABEL=leloi
+btrfs /var --subvol --name=var LABEL=leloi
+btrfs /var/home --subvol --name=var_home LABEL=leloi
+
+timesource --ntp-disable
+# System timezone
+timezone Asia/Seoul --utc
+ 
+# Run the Setup Agent on first boot
+firstboot --enable
+
+#Root password
+rootpw --lock
+
+reboot
+"""
+
+[customizations.installer.modules]
+disable = ["org.fedoraproject.Anaconda.Modules.Users"]
