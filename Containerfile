@@ -12,11 +12,11 @@ COPY --chmod=0644 ./rootfs/etc/yum.repos.d/* /etc/yum.repos.d/
 RUN dnf -y install dnf5-plugins
 
 # Update - Not recommanded
-RUN dnf update -y
+#RUN dnf update -y
 
 # INSTALL PACKAGES
 RUN dnf -y group install workstation-product-environment
-RUN dnf -y install @base-x
+#RUN dnf -y install @base-x
 RUN dnf -y install initial-setup
 #RUN grep -vE '^#' /usr/local/share/bootc/packages-added | xargs dnf -y install --allowerasing 
 #RUN dnf install -y $(cat /tmp/packages | grep "^[^#;]")
@@ -24,7 +24,7 @@ RUN cat /usr/local/share/bootc/packages-added | grep "^[^#;]" | xargs dnf -y ins
 
 # REMOVE PACKAGES
 #RUN grep -vE '^#' /usr/local/share/bootc/packages-removed | xargs dnf -y remove
-RUN cat /usr/local/share/bootc/packages-removed | grep "^[^#;]" | xargs dnf -y install --allowerasing
+RUN cat /usr/local/share/bootc/packages-removed | grep "^[^#;]" | xargs dnf -y remove --allowerasing
 RUN dnf -y autoremove
 RUN dnf clean all
 
