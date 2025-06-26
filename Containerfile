@@ -6,7 +6,7 @@ RUN mkdir /var/roothome
 # PREPARE PACKAGES
 COPY --chmod=0644 ./rootfs/usr/local/share/bootc/packages-added /usr/local/share/bootc/packages-added
 COPY --chmod=0644 ./rootfs/usr/local/share/bootc/packages-removed /usr/local/share/bootc/packages-removed
-COPY --chmod=0755 ./rootfs/etc/yum.repos.d/* /etc/yum.repos.d/
+COPY --chmod=0644 ./rootfs/etc/yum.repos.d/* /etc/yum.repos.d/
 
 # INSTALL REPOS
 RUN dnf -y install dnf5-plugins
