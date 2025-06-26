@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- filename: hangul.xml -->
+<component>
+	<name>org.freedesktop.IBus.Hangul</name>
+	<description>Korean Component</description>
+	<exec>/usr/libexec/ibus-engine-hangul --ibus</exec>
+	<version>1.5.5</version>
+	<author>Peng Huang &lt;shawn.p.huang@gmail.com&gt;</author>
+	<license>GPL</license>
+	<homepage>https://github.com/libhangul/ibus-hangul</homepage>
+	<textdomain>ibus-hangul</textdomain>
+
+	<engines>
+		<engine>
+			<name>hangul</name>
+			<language>ko</language>
+			<license>GPL</license>
+			<author>Peng Huang &lt;shawn.p.huang@gmail.com&gt;</author>
+			<icon>ibus-hangul</icon>
+			<layout>default</layout>
+			<layout_variant>kr104</layout_variant>
+			<longname>Hangul</longname>
+			<description>Korean Input Method</description>
+			<rank>99</rank>
+			<symbol>&#xD55C;</symbol>
+			<setup>/usr/libexec/ibus-setup-hangul</setup>
+		</engine>
+	</engines>
+
+</component>
