@@ -1,15 +1,11 @@
-####################################################
-# List of packages to install on top of base image
-####################################################
-
-xorg-x11-server-Xorg
-emacs-gtk+x11
+alsa-utils
 arandr
 blueman
 brightnessctl
 cmake
 dmenu
 dunst
+emacs-gtk+x11
 feh
 gnome-classic-session-xsession
 gnome-session-xsession
@@ -52,8 +48,7 @@ virt-top
 virt-viewer
 vnstat
 wireguard-tools
-#xorg-x11-server-Xorg
+xorg-x11-server-Xorg
 xsel
 xset
 zsh
-alsa-utils
