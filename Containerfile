@@ -1,5 +1,11 @@
 FROM quay.io/fedora/fedora-bootc:42
 
+LABEL org.opencontainers.image.title="LeLoi Linux"
+LABEL org.opencontainers.image.description="LeLoi Linux's bootc container image"
+LABEL org.opencontainers.image.authors="Seungjin Kim <seungjin@duck.com>"
+LABEL org.opencontainers.image.licenses="MIT"
+LABEL org.opencontainers.image.source="https://github.com/seungjin/leloi-linux"
+
 RUN rmdir /opt && ln -s -T /var/opt /opt
 RUN mkdir /var/roothome
 
