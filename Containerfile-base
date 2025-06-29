@@ -1,0 +1,44 @@
+FROM quay.io/fedora/fedora-bootc:42
+# source: https://gitlab.com/fedora/bootc/base-images
+# source: https://gitlab.com/fedora/bootc/base-images/-/blob/main/Containerfile?ref_type=heads
+
+LABEL org.opencontainers.image.title="LeLoi Linux"
+LABEL org.opencontainers.image.description="LeLoi Linux's bootc container's base image"
+LABEL org.opencontainers.image.authors="Seungjin Kim <seungjin@duck.com>"
+LABEL org.opencontainers.image.licenses=MIT
+LABEL org.opencontainers.image.source="https://github.com/seungjin/leloi-linux"
+
+RUN rmdir /opt && ln -s -T /var/opt /opt
+RUN mkdir /var/roothome
+
+# INSTALL REPOS
+RUN dnf -y install dnf5-plugins
+
+# INSTALL PACKAGES
+RUN dnf -y group install workstation-product-environment
+RUN dnf -y install initial-setup
+RUN dnf -y autoremove
+RUN dnf clean all
+
+RUN ln -sf /usr/lib/systemd/system/graphical.target /etc/systemd/system/default.target
+
+#RUN systemctl mask systemd-remount-fs.service
+# Created symlink '/etc/systemd/system/systemd-remount-fs.service' → '/dev/null'.
+RUN ln -s /dev/null /etc/systemd/system/systemd-remount-fs.service 
+
+##
+# systemctl mask packagekit.service
+RUN ln -s /dev/null /etc/systemd/system/packagekit.service
+
+# systemctl mask packagekit-offline-update.service
+RUN ln -s /dev/null /etc/systemd/system/packagekit-offline-update.service
+
+# systemctl enable gdm 
+RUN if [ "$(readlink /etc/systemd/system/display-manager.service 2>/dev/null)" != "/usr/lib/systemd/system/gdm.service" ]; then \
+    ln -sf /usr/lib/systemd/system/gdm.service /etc/systemd/system/display-manager.service; \
+  fi
+
+
+# CLEAN & CHECK
+RUN find /var/log -type f ! -empty -delete
+RUN bootc container lint
