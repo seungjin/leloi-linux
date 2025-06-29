@@ -1,4 +1,6 @@
 FROM quay.io/fedora/fedora-bootc:42
+# source: https://gitlab.com/fedora/bootc/base-images
+# source: https://gitlab.com/fedora/bootc/base-images/-/blob/main/Containerfile?ref_type=heads
 
 LABEL org.opencontainers.image.title="LeLoi Linux"
 LABEL org.opencontainers.image.description="LeLoi Linux's bootc container image"
@@ -17,30 +19,26 @@ COPY --chmod=0644 ./rootfs/etc/yum.repos.d/* /etc/yum.repos.d/
 # INSTALL REPOS
 RUN dnf -y install dnf5-plugins
 
-# Update - Not recommanded
-#RUN dnf update -y
-
 # INSTALL PACKAGES
 RUN dnf -y group install workstation-product-environment
-#RUN dnf -y install @base-x
 RUN dnf -y install initial-setup
-#RUN grep -vE '^#' /usr/local/share/bootc/packages-added | xargs dnf -y install --allowerasing 
-#RUN dnf install -y $(cat /tmp/packages | grep "^[^#;]")
-RUN cat /usr/local/share/bootc/packages-added | grep "^[^#;]" | xargs dnf -y install --allowerasing
+RUN grep "^[^#;]" /usr/local/share/bootc/packages-added | grep -qE '^[A-Ia-i]' && grep "^[^#;]" /usr/local/share/bootc/packages-added | grep -E '^[A-Ia-i]' | xargs dnf -y install --allowerasing || echo "pass"
+RUN grep "^[^#;]" /usr/local/share/bootc/packages-added | grep -qE '^[J-Rj-r]' && grep "^[^#;]" /usr/local/share/bootc/packages-added | grep -E '^[J-Rj-r]' | xargs dnf -y install --allowerasing || echo "pass"
+RUN grep "^[^#;]" /usr/local/share/bootc/packages-added | grep -qE '^[S-Zs-z]' && grep "^[^#;]" /usr/local/share/bootc/packages-added | grep -E '^[S-Zs-z]' | xargs dnf -y install --allowerasing || echo "pass"
+RUN grep "^[^#;]" /usr/local/share/bootc/packages-added | grep -qE '^[0-9]' && grep "^[^#;]" /usr/local/share/bootc/packages-added | grep -E '^[0-9]' | xargs dnf -y install --allowerasing || echo "pass"
+
 
 # REMOVE PACKAGES
-#RUN grep -vE '^#' /usr/local/share/bootc/packages-removed | xargs dnf -y remove
 RUN cat /usr/local/share/bootc/packages-removed | grep "^[^#;]" | xargs dnf -y remove
 RUN dnf -y autoremove
 RUN dnf clean all
 
 # CONFIGURATION
 COPY --chmod=0755 ./rootfs/usr/local/bin/* /usr/local/bin/
-#COPY --chmod=0644 ./rootfs/etc/skel/leloi-bootc /etc/skel/.bashrc.d/leloi-bootc
+COPY --chmod=0644 ./rootfs/etc/skel/leloi-bootc /etc/skel/.bashrc.d/leloi-bootc
 COPY --chmod=0600 ./rootfs/usr/lib/ostree/auth.json /usr/lib/ostree/auth.json
 COPY --chmod=0644 ./rootfs/etc/vconsole.conf /etc/vconsole.conf
 COPY --chmod=0644 ./rootfs/etc/sudoers.d/seungjin /etc/sudoers.d/seungjin
-
 COPY --chmod=0644 ./rootfs/usr/share/xsessions/leftwm.desktop /usr/share/xsessions/leftwm.desktop
 COPY --chmod=0644 ./rootfs/usr/share/ibus/component/hangul.xml /usr/share/ibus/component/hangul.xml 
 
