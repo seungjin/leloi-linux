@@ -1,3 +1,4 @@
+#@base-x
 alsa-utils
 arandr
 blueman
@@ -36,6 +37,7 @@ podman-compose
 polybar
 powertop
 python3-libguestfs
+pavucontrol
 qemu-kvm
 rofi
 scrot
