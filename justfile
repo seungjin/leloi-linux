@@ -14,6 +14,8 @@ build:
     --chown 1000:1000 \
     localhost/leloi-linux
 
+iso:
+
 clean:
     trash ./output
     mkdir ./output
