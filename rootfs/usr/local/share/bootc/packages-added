@@ -1,5 +1,4 @@
 #@base-x
-alsa-utils
 arandr
 blueman
 brightnessctl
@@ -38,12 +37,13 @@ polybar
 powertop
 python3-libguestfs
 pavucontrol
+pulseaudio-module-x11
+pulseaudio-utils
 qemu-kvm
 rofi
 scrot
 sysstat
 tmux
-vim
 virt-install
 virt-manager
 virt-top
@@ -54,4 +54,3 @@ xorg-x11-server-Xorg
 xsel
 xset
 zsh
-pulseaudio-utils
