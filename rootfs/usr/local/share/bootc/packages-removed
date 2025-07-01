@@ -19,7 +19,5 @@ dracut-config-rescue
 dnf-data
 
 firefox
-#firefox-langpacks_139.0-1
-#noopenh264_2.5.0-2
 libreoffice*
 
