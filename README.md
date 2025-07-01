@@ -7,7 +7,7 @@ LeLoi features a 14" WUXGA (1920 × 1200) IPS 60Hz display.
 
 How to create boot image:  
 ```
-$ sudo podman build -t leloi-linux .
+$ sudo podman build -t leloi-linux-base .
 ```
 
 How to create bootable iso to install to bare metal machine: 
@@ -20,7 +20,7 @@ $ sudo podman run --rm -it --privileged --pull=newer \
   quay.io/centos-bootc/bootc-image-builder:latest \
   --type iso \
   --chown 1000:1000 \
-  localhost/leloi-linux
+  localhost/leloi-linux-base
 ```  
 
  
