@@ -35,8 +35,8 @@ RUN ln -s /dev/null /etc/systemd/system/packagekit-offline-update.service
 
 # systemctl enable gdm 
 RUN if [ "$(readlink /etc/systemd/system/display-manager.service 2>/dev/null)" != "/usr/lib/systemd/system/gdm.service" ]; then \
-    ln -sf /usr/lib/systemd/system/gdm.service /etc/systemd/system/display-manager.service; \
-  fi
+      ln -sf /usr/lib/systemd/system/gdm.service /etc/systemd/system/display-manager.service; \
+    fi
 
 
 # CLEAN & CHECK
