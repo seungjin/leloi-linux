@@ -7,7 +7,7 @@ dmenu
 dunst
 emacs-gtk+x11
 feh
-gnome-classic-session-xsession
+#gnome-classic-session-xsession
 gnome-session-xsession
 gtk4-devel
 htop

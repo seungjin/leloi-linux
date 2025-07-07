@@ -1,4 +1,4 @@
-FROM ghcr.io/seungjin/leloi-linux-base:daily
+FROM ghcr.io/seungjin/leloi-linux-base:latest
 # source: https://gitlab.com/fedora/bootc/base-images
 # source: https://gitlab.com/fedora/bootc/base-images/-/blob/main/Containerfile?ref_type=heads
 
@@ -63,9 +63,9 @@ RUN if [ "$(readlink /etc/systemd/system/display-manager.service 2>/dev/null)" !
 
 
 # This does not work at Containerfile
-RUN gsettings set org.gnome.software allow-updates false
+#RUN gsettings set org.gnome.software allow-updates false
 # This does not work at Containerfile
-RUN gsettings set org.gnome.desktop.input-sources xkb-options "['caps:ctrl_modifier']"
+#RUN gsettings set org.gnome.desktop.input-sources xkb-options "['caps:ctrl_modifier']"
 
 # CLEAN & CHECK
 RUN find /var/log -type f ! -empty -delete

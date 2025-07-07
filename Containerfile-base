@@ -15,7 +15,7 @@ RUN mkdir /var/roothome
 RUN dnf -y install dnf5-plugins
 
 # INSTALL PACKAGES
-RUN dnf -y group install workstation-product-environment
+RUN dnf -y group install cosmic-desktop
 RUN dnf -y install initial-setup
 RUN dnf -y autoremove
 RUN dnf clean all
