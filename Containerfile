@@ -2,9 +2,6 @@ FROM ghcr.io/seungjin/leloi-linux-base:latest
 # source: https://gitlab.com/fedora/bootc/base-images
 # source: https://gitlab.com/fedora/bootc/base-images/-/blob/main/Containerfile?ref_type=heads
 
-#FROM ghcr.io/seungjin/leloi-linux:latest  #???
-
-
 LABEL org.opencontainers.image.title="LeLoi Linux"
 LABEL org.opencontainers.image.description="LeLoi Linux's bootc container image"
 LABEL org.opencontainers.image.authors="Seungjin Kim <seungjin@duck.com>"
