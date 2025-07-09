@@ -2,22 +2,34 @@
 # List of packages to remove from image
 ####################################################
 
-
-
-
 # Helper to install package on the command line - Not compatible with bootc
 PackageKit-command-not-found
 
 # Utility for time-oriented job control - systemd-timer is better alternative
 at
 
-
 # Generates rescue initramfs image - Bootc already provides rollback image
 dracut-config-rescue
 
 # Remove DNF4
-dnf-data
+#dnf-data
 
 firefox
 libreoffice*
 
+#gnome-desktop3
+#gnome-desktop4
+#gnome-session
+#gnome-online-accounts-libs
+#xdg-desktop-portal-gnome
+#gnome-autoar4
+#gnome-online-accounts
+#gnome-shell-common
+#gnome-settings-daemon
+#gnome-control-center
+#gnome-shell
+#gnome-session-wayland-session
+#gnome-session-xsession
+#gnome-remote-desktop
+gnome-tour
+gnome-color-manager

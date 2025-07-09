@@ -53,10 +53,11 @@ RUN ln -sf /dev/null /etc/systemd/system/packagekit-offline-update.service
 COPY --chmod=755 ./bin/* /usr/local/bin/
 
 
+# I do not use gdm anymore
 # systemctl enable gdm 
-RUN if [ "$(readlink /etc/systemd/system/display-manager.service 2>/dev/null)" != "/usr/lib/systemd/system/gdm.service" ]; then \
-    ln -sf /usr/lib/systemd/system/gdm.service /etc/systemd/system/display-manager.service; \
-  fi
+#RUN if [ "$(readlink /etc/systemd/system/display-manager.service 2>/dev/null)" != "/usr/lib/systemd/system/gdm.service" ]; then \
+#    ln -sf /usr/lib/systemd/system/gdm.service /etc/systemd/system/display-manager.service; \
+#  fi
 
 
 # This does not work at Containerfile
