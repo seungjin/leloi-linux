@@ -1,7 +1,4 @@
-#@base-x
 arandr
-#blueman
-#stalonetray
 bluetoothctl
 brightnessctl
 cmake
@@ -11,13 +8,13 @@ emacs-gtk+x11
 feh
 git
 git-lfs
-#gnome-session-xsession
 gnome-keyring
 gnome-disk-utility
 gtk4-devel
 htop
 i3lock
 ibus-panel
+ibus-hangul
 ImageMagick
 inotify-tools
 iotop
