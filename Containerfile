@@ -27,7 +27,7 @@ RUN dnf -y autoremove
 RUN dnf clean all
 
 # CONFIGURATION
-COPY --chmod=0755 ./rootfs/usr/local/bin/* /usr/local/bin/
+# COPY --chmod=0755 ./rootfs/usr/local/bin/* /usr/local/bin/ # now I use systemd-sysext for /usr/local/bin
 COPY --chmod=0644 ./rootfs/etc/skel/leloi-bootc /etc/skel/.bashrc.d/leloi-bootc
 COPY --chmod=0600 ./rootfs/usr/lib/ostree/auth.json /usr/lib/ostree/auth.json
 COPY --chmod=0644 ./rootfs/etc/vconsole.conf /etc/vconsole.conf
@@ -48,10 +48,6 @@ RUN ln -sf /dev/null /etc/systemd/system/packagekit.service
 
 #RUN systemctl mask packagekit-offline-update.service
 RUN ln -sf /dev/null /etc/systemd/system/packagekit-offline-update.service
-
-## my binaries
-COPY --chmod=755 ./bin/* /usr/local/bin/
-
 
 # I do not use gdm anymore
 # systemctl enable gdm 
