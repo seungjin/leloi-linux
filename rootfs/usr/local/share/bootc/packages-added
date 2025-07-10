@@ -56,10 +56,17 @@ virt-manager
 virt-top
 virt-viewer
 vnstat
-xwayland-satellite
 wireguard-tools
 xinit
 xorg-x11-server-Xorg
 xsel
 xset
 zsh
+# niri
+xwayland-satellite
+fuzzel
+swaylock
+waybar
+mako
+swaybg
+swayidle 
