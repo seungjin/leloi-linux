@@ -1,4 +1,3 @@
-arandr
 bluetoothctl
 brightnessctl
 cmake
@@ -69,4 +68,11 @@ swaylock
 waybar
 mako
 swaybg
-swayidle 
+swayidle
+# wayland stuffs
+wl-clipboard
+grim
+# ibus for wayland?
+ibus-wayland
+
+xdg-desktop-portal-wlr
