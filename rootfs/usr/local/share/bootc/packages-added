@@ -74,5 +74,5 @@ wl-clipboard
 grim
 # ibus for wayland?
 ibus-wayland
-
 xdg-desktop-portal-wlr
+wlr-randr
