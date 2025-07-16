@@ -14,6 +14,10 @@ RUN mkdir /var/roothome
 # INSTALL REPOS
 RUN dnf -y install dnf5-plugins
 
+# Set dnf use fastestmirror
+#RUN sed -i '/^fastestmirror=/d' /etc/dnf/dnf.conf && echo 'fastestmirror=1' | sudo tee -a /etc/dnf/dnf.conf
+RUN dnf5 config-manager setopt fastestmirror=1 
+
 # INSTALL PACKAGES
 RUN dnf -y group install cosmic-desktop
 RUN dnf -y install initial-setup
