@@ -1,6 +1,7 @@
 bluetoothctl
 brightnessctl
 cmake
+emacs
 git
 git-lfs
 gnome-keyring
