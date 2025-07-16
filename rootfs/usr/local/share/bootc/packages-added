@@ -1,17 +1,12 @@
 bluetoothctl
 brightnessctl
 cmake
-dmenu
-dunst
-emacs-gtk+x11
-feh
 git
 git-lfs
 gnome-keyring
 gnome-disk-utility
 gtk4-devel
 htop
-i3lock
 ibus-panel
 ibus-hangul
 ImageMagick
@@ -46,8 +41,6 @@ pavucontrol
 pulseaudio-module-x11
 pulseaudio-utils
 qemu-kvm
-rofi
-scrot
 sysstat
 tmux
 virt-install
@@ -76,3 +69,5 @@ grim
 ibus-wayland
 xdg-desktop-portal-wlr
 wlr-randr
+libglvnd-gles
+wdisplays
