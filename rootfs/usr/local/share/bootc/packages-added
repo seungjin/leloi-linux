@@ -8,8 +8,9 @@ gnome-keyring
 gnome-disk-utility
 gtk4-devel
 htop
-ibus-panel
-ibus-hangul
+#ibus-panel
+#ibus-wayland
+#ibus-hangul
 ImageMagick
 inotify-tools
 iotop
@@ -66,9 +67,8 @@ swayidle
 # wayland stuffs
 wl-clipboard
 grim
-# ibus for wayland?
-ibus-wayland
 xdg-desktop-portal-wlr
 wlr-randr
 libglvnd-gles
 wdisplays
+kime-git
