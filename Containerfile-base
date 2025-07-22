@@ -20,9 +20,8 @@ RUN dnf5 config-manager setopt fastestmirror=1
 
 # INSTALL PACKAGES
 RUN dnf -y group install cosmic-desktop
-RUN dnf -y install initial-setup
+RUN dnf -y install initial-setup NetworkManager linux-firmware
 #RUN dnf -y remove gdm
-#RUN dnf -y install xinit xorg-x11-server-Xorg NetworkManager linux-firmware
 RUN dnf -y autoremove
 RUN dnf clean all
 
