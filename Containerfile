@@ -8,9 +8,6 @@ LABEL org.opencontainers.image.authors="Seungjin Kim <seungjin@duck.com>"
 LABEL org.opencontainers.image.licenses=MIT
 LABEL org.opencontainers.image.source="https://github.com/seungjin/leloi-linux"
 
-# Add Repo
-RUN dnf -y copr enable toroidalfox/kime
-
 # PREPARE PACKAGES
 COPY --chmod=0644 ./rootfs/usr/local/share/bootc/packages-added /usr/local/share/bootc/packages-added
 COPY --chmod=0644 ./rootfs/usr/local/share/bootc/packages-removed /usr/local/share/bootc/packages-removed
