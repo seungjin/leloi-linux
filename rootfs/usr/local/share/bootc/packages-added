@@ -71,4 +71,4 @@ xdg-desktop-portal-wlr
 wlr-randr
 libglvnd-gles
 wdisplays
-kime
+#kime
