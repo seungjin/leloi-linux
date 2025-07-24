@@ -1,0 +1,29 @@
+name: Daily Build
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Runs daily at 00:00 UTC
+  workflow_dispatch:      # Allows manual triggering too
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Install Podman
+        run: |
+          sudo apt update
+          sudo apt install -y podman
+
+      - name: Build image
+        run: |
+          podman build -t my-image:daily .
+
+      - name: Log in to container registry
+        run: echo "${{ secrets.REGISTRY_PASSWORD }}" | podman login ghcr.io -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin
+
+      - name: Push image
+        run: podman push my-image:daily my.registry.com/my-image:daily
