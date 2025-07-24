@@ -48,12 +48,6 @@ RUN ln -sf /dev/null /etc/systemd/system/packagekit.service
 #RUN systemctl mask packagekit-offline-update.service
 RUN ln -sf /dev/null /etc/systemd/system/packagekit-offline-update.service
 
-# I do not use gdm anymore
-# systemctl enable gdm 
-#RUN if [ "$(readlink /etc/systemd/system/display-manager.service 2>/dev/null)" != "/usr/lib/systemd/system/gdm.service" ]; then \
-#    ln -sf /usr/lib/systemd/system/gdm.service /etc/systemd/system/display-manager.service; \
-#  fi
-
 
 # This does not work at Containerfile
 #RUN gsettings set org.gnome.software allow-updates false
