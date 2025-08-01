@@ -31,6 +31,7 @@ network-manager-applet
 NetworkManager
 NetworkManager-wifi
 openh264
+opensc
 openssl
 parallel
 pinentry-tty
@@ -40,9 +41,10 @@ polybar
 powertop
 python3-libguestfs
 pavucontrol
-pulseaudio-module-x11
-pulseaudio-utils
+# pulseaudio-module-x11
+# pulseaudio-utils
 qemu-kvm
+rsync
 sysstat
 tmux
 virt-install
