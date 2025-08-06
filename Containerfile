@@ -28,6 +28,7 @@ RUN dnf clean all
 
 # CONFIGURATION
 # COPY --chmod=0755 ./rootfs/usr/local/bin/* /usr/local/bin/ # now I use systemd-sysext for /usr/local/bin
+
 COPY --chmod=0644 ./rootfs/etc/skel/leloi-bootc /etc/skel/.bashrc.d/leloi-bootc
 COPY --chmod=0600 ./rootfs/usr/lib/ostree/auth.json /usr/lib/ostree/auth.json
 COPY --chmod=0644 ./rootfs/etc/vconsole.conf /etc/vconsole.conf

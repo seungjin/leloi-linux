@@ -18,11 +18,16 @@ RUN dnf -y install dnf5-plugins
 #RUN sed -i '/^fastestmirror=/d' /etc/dnf/dnf.conf && echo 'fastestmirror=1' | sudo tee -a /etc/dnf/dnf.conf
 RUN dnf5 config-manager setopt fastestmirror=1 
 
+# https://docs.fedoraproject.org/en-US/bootc/os-release-and-versions/
+#RUN dnf -y swap fedora-release generic-release --allowerasing 
+
 # INSTALL PACKAGES
-RUN dnf -y group install cosmic-desktop
-RUN dnf -y install initial-setup NetworkManager linux-firmware
-RUN dnf -y autoremove
-RUN dnf clean all
+RUN <<EOF
+dnf -y group install cosmic-desktop
+dnf -y install initial-setup NetworkManager linux-firmware
+dnf -y autoremove
+dnf clean all
+EOF
 
 RUN ln -sf /usr/lib/systemd/system/graphical.target /etc/systemd/system/default.target
 
@@ -36,6 +41,8 @@ RUN ln -s /dev/null /etc/systemd/system/packagekit.service
 
 # systemctl mask packagekit-offline-update.service
 RUN ln -s /dev/null /etc/systemd/system/packagekit-offline-update.service
+
+COPY --chmod=0644 ./rootfs/usr/lib/os-release /usr/lib/os-release
 
 # CLEAN & CHECK
 RUN find /var/log -type f ! -empty -delete
