@@ -7,10 +7,6 @@ VERSION_CODENAME=""
 PLATFORM_ID="platform:f42"
 PRETTY_NAME="LeLoi Linux 42"
 ANSI_COLOR="0;38;2;60;110;180"
-LOGO=fedora-logo-icon
-CPE_NAME="cpe:/o:fedoraproject:fedora:42"
+LOGO=leloi-logo-icon
 DEFAULT_HOSTNAME="LeLoi"
 HOME_URL="https://github.com/seungjin/leloi-linux"
-
-
-
