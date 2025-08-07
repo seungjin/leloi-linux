@@ -42,7 +42,7 @@ powertop
 python3-libguestfs
 pavucontrol
 # pulseaudio-module-x11
-# pulseaudio-utils
+pulseaudio-utils
 qemu-kvm
 rsync
 sysstat
