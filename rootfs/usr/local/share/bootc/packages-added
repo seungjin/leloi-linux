@@ -1,4 +1,3 @@
-beep
 bluetoothctl
 brightnessctl
 cmake
@@ -75,3 +74,4 @@ wlr-randr
 libglvnd-gles
 wdisplays
 #kime
+
