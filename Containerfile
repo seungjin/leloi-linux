@@ -1,4 +1,5 @@
 FROM ghcr.io/seungjin/leloi-linux-base:latest
+
 # source: https://gitlab.com/fedora/bootc/base-images
 # source: https://gitlab.com/fedora/bootc/base-images/-/blob/main/Containerfile?ref_type=heads
 
@@ -13,6 +14,15 @@ COPY --chmod=0644 ./rootfs/usr/local/share/bootc/packages-added /usr/local/share
 COPY --chmod=0644 ./rootfs/usr/local/share/bootc/packages-removed /usr/local/share/bootc/packages-removed
 COPY --chmod=0644 ./rootfs/etc/yum.repos.d/* /etc/yum.repos.d/
 
+
+# systemd-sysusers
+COPY ./rootfs/etc/sysusers.d/ /etc/sysusers.d/
+RUN systemd-sysusers 
+
+
+
+
+
 # INSTALL PACKAGES
 RUN grep "^[^#;]" /usr/local/share/bootc/packages-added | grep -E '^[A-Ea-e]' | xargs -r dnf -y install --allowerasing
 RUN grep "^[^#;]" /usr/local/share/bootc/packages-added | grep -E '^[F-Jf-j]' | xargs -r dnf -y install --allowerasing
@@ -26,22 +36,35 @@ RUN cat /usr/local/share/bootc/packages-removed | grep "^[^#;]" | xargs -r dnf -
 RUN dnf -y autoremove
 RUN dnf clean all
 
-# CONFIGURATION
-# COPY --chmod=0755 ./rootfs/usr/local/bin/* /usr/local/bin/ # now I use systemd-sysext for /usr/local/bin
+# root filesystem copy
+COPY ./rootfs/ /
 
-COPY --chmod=0644 ./rootfs/etc/skel/leloi-bootc /etc/skel/.bashrc.d/leloi-bootc
-COPY --chmod=0600 ./rootfs/usr/lib/ostree/auth.json /usr/lib/ostree/auth.json
-COPY --chmod=0644 ./rootfs/etc/vconsole.conf /etc/vconsole.conf
-COPY --chmod=0644 ./rootfs/etc/default/keyboard /etc/default/keyboard
+# CONFIGURATION
+
+# sudo-rs
+RUN chown root:root /usr/local/bin/sudo
+RUN chmod 4755 /usr/local/bin/sudo
+
+#COPY --chmod=0644 ./rootfs/etc/skel/leloi-bootc /etc/skel/.bashrc.d/leloi-bootc
+#COPY --chmod=0600 ./rootfs/usr/lib/ostree/auth.json /usr/lib/ostree/auth.json
+#COPY --chmod=0644 ./rootfs/etc/vconsole.conf /etc/vconsole.conf
+#COPY --chmod=0644 ./rootfs/etc/default/keyboard /etc/default/keyboard
 # COPY --chmod=0644 ./rootfs/etc/sudoers.d/seungjin /etc/sudoers.d/seungjin
-COPY --chmod=0644 ./rootfs/usr/share/ibus/component/hangul.xml /usr/share/ibus/component/hangul.xml 
+#COPY --chmod=0644 ./rootfs/usr/share/ibus/component/hangul.xml /usr/share/ibus/component/hangul.xml 
 
 #RUN systemctl set-default graphical.target 
 RUN ln -sf /usr/lib/systemd/system/graphical.target /etc/systemd/system/default.target
 
+
 #RUN systemctl mask systemd-remount-fs.service
 # Created symlink '/etc/systemd/system/systemd-remount-fs.service' → '/dev/null'.
 RUN ln -sf /dev/null /etc/systemd/system/systemd-remount-fs.service 
+
+RUN ln -sf /dev/null /usr/lib/systemd/system/cosmic-greeter-daemon.service  
+RUN ln -sf /dev/null /usr/lib/systemd/system/cosmic-greeter.service
+RUN ln -s /usr/lib/systemd/system/greetd.service /etc/systemd/system/multi-user.target.wants/greetd.service
+
+RUN ln -s /etc/systemd/system/disable-lid-wake.service /etc/systemd/system/multi-user.target.wants/disable-lid-wake.service
 
 ##
 #RUN systemctl mask packagekit.service
@@ -49,7 +72,6 @@ RUN ln -sf /dev/null /etc/systemd/system/packagekit.service
 
 #RUN systemctl mask packagekit-offline-update.service
 RUN ln -sf /dev/null /etc/systemd/system/packagekit-offline-update.service
-
 
 # This does not work at Containerfile
 #RUN gsettings set org.gnome.software allow-updates false

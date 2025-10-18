@@ -1,12 +1,12 @@
-NAME="Leloi Linux"
-VERSION="42"
+NAME="Fedora Linux"
+VERSION="42 (LeLoi Bootc)"
 RELEASE_TYPE=development
-ID=leloi
+ID=fedora
 VERSION_ID=42
 VERSION_CODENAME=""
 PLATFORM_ID="platform:f42"
-PRETTY_NAME="LeLoi Linux 42"
+PRETTY_NAME="Fedora Linux 42 (LeLoi Bootc)"
 ANSI_COLOR="0;38;2;60;110;180"
-LOGO=leloi-logo-icon
+LOGO=fedora-logo-icon
 DEFAULT_HOSTNAME="LeLoi"
 HOME_URL="https://github.com/seungjin/leloi-linux"
