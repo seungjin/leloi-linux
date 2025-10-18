@@ -105,7 +105,7 @@ a:
         set new_tag (string join . $parts)
     end
 
-    podman build -f Containerfile-base -t ghcr.io/seungjin/leloi-linux-base:$new_tag .
+    podman build --pull -f Containerfile-base -t ghcr.io/seungjin/leloi-linux-base:$new_tag .
     podman tag ghcr.io/seungjin/leloi-linux-base:$new_tag ghcr.io/seungjin/leloi-linux-base:latest
     podman push ghcr.io/seungjin/leloi-linux-base:$new_tag
     podman push ghcr.io/seungjin/leloi-linux-base:latest
@@ -124,7 +124,7 @@ b:
         set new_tag (string join . $parts)
     end
 
-    podman build -f Containerfile -t ghcr.io/seungjin/leloi-linux:$new_tag .
+    podman build --pull -f Containerfile -t ghcr.io/seungjin/leloi-linux:$new_tag .
     podman push ghcr.io/seungjin/leloi-linux:$new_tag
 
 c:

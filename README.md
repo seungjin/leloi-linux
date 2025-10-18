@@ -19,8 +19,9 @@ $ sudo podman run --rm -it --privileged --pull=newer \
   -v ./config.toml:/config.toml:ro \
   quay.io/centos-bootc/bootc-image-builder:latest \
   --type iso \
+  --rootfs btrfs \
   --chown 1000:1000 \
-  localhost/leloi-linux-base
+  ghcr.io/seungjin/leloi-linux-base
 ```  
 
  
