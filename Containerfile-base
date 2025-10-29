@@ -1,4 +1,4 @@
-FROM quay.io/fedora/fedora-bootc:42
+FROM quay.io/fedora/fedora-bootc:43
 # source: https://gitlab.com/fedora/bootc/base-images
 # source: https://gitlab.com/fedora/bootc/base-images/-/blob/main/Containerfile?ref_type=heads
 
