@@ -124,7 +124,7 @@ b:
         set new_tag (string join . $parts)
     end
 
-    podman build --pull -f Containerfile -t ghcr.io/seungjin/leloi-linux:$new_tag .
+    podman build --no-cache -f Containerfile -t ghcr.io/seungjin/leloi-linux:$new_tag .
     podman push ghcr.io/seungjin/leloi-linux:$new_tag
 
 c:
