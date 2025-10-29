@@ -1,22 +1,36 @@
+# niri
+# pulseaudio-module-x11
+# pulseaudio-utils
+# wayland stuffs
+# xdg-desktop-portal-wlr
+#ibus-hangul
+#ibus-panel
+#ibus-wayland
+#kime
+ImageMagick
+NetworkManager
+NetworkManager-wifi
 audit
+blueman
 bluetoothctl
 brightnessctl
 btop
 cmake
-emacs
+#emacs
+firewalld
 foot
+fuzzel
 git
 git-lfs
-gnome-keyring
 gnome-disk-utility
+gnome-keyring
+grim
 gtk4-devel
-#ibus-panel
-#ibus-wayland
-#ibus-hangul
-ImageMagick
+ifuse
 inotify-tools
 iotop
 libadwaita-devel
+libglvnd-gles
 libguestfs-tools
 librewolf
 libtool
@@ -26,60 +40,46 @@ libvterm
 linux-firmware
 lm_sensors
 lxpolkit
+mako
 mozilla-openh264
 net-tools
 network-manager-applet
-NetworkManager
-NetworkManager-wifi
 openh264
 opensc
 openssl
 parallel
-pinentry-tty
+pavucontrol
 pinentry-gnome3
+pinentry-tty
+pipewire-utils
 podman-compose
 polybar
 powertop
 python3-libguestfs
-pavucontrol
-# pulseaudio-module-x11
-# pulseaudio-utils
 qemu-kvm
 rsync
+sqlite
+stow
+swaybg
+swayidle
+swaylock
 sysstat
 tmux
+usbutils
 virt-install
 virt-manager
 virt-top
 virt-viewer
 vnstat
+waybar
+wdisplays
 wireguard-tools
+wl-clipboard
+wlr-randr
+xdg-desktop-portal-gnome
 xinit
 xorg-x11-server-Xorg
 xsel
 xset
-zsh
-# niri
 xwayland-satellite
-fuzzel
-swaylock
-waybar
-mako
-swaybg
-swayidle
-# wayland stuffs
-wl-clipboard
-grim
-# xdg-desktop-portal-wlr
-wlr-randr
-libglvnd-gles
-wdisplays
-#kime
-usbutils
-ifuse
-xdg-desktop-portal-gnome
-blueman
-pipewire-utils
-stow
-firewalld
-sqlite
+zsh
