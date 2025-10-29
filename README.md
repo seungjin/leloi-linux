@@ -24,8 +24,10 @@ $ sudo podman run --rm -it --privileged --pull=newer \
   ghcr.io/seungjin/leloi-linux-base
 ```  
 
+
+# Note 
+- As of Oct 29, 2025: leloi-linux-base:86 and leloi-linux:217 are Fedora 43 based.
  
 
-  
 TODO:
   - 
