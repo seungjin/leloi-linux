@@ -16,7 +16,7 @@ bluetoothctl
 brightnessctl
 btop
 cmake
-#emacs
+emacs
 firewalld
 foot
 fuzzel
