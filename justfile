@@ -110,22 +110,23 @@ a:
         new_tag=$(IFS=.; echo "${parts[*]}")
     fi
 
-    temp_tag="ghcr.io/seungjin/leloi-linux-base:$new_tag-temp"
+    temp_tag="localhost/leloi-linux-base:$new_tag-temp"
     podman build --pull -f Containerfile-base -t $temp_tag
 
     temp_tag_id=$(podman image ls $temp_tag --format '{{{{.Id}}')
     existing_ids=($(podman image ls ghcr.io/seungjin/leloi-linux-base --format '{{{{.Id}}'))
+
 
     if [[ " ${existing_ids[@]} " =~ " ${temp_tag_id} " ]]; then
         podman rmi $temp_tag
         echo "No newer image created."
         echo "Current latest is ghcr.io/seungjin/leloi-linux-base:$latest_tag."
     else
-        podman imade tag $temp_tag "ghcr.io/seungjin/leloi-linux-base:$new_tag"
-        podman image tag rm $temp_tag
+        podman image tag $temp_tag "ghcr.io/seungjin/leloi-linux-base:$new_tag"
         podman image tag "ghcr.io/seungjin/leloi-linux-base:$new_tag" "ghcr.io/seungjin/leloi-linux-base:latest"
-        podman push "ghcr.io/seungjin/leloi-linux-base:$newtag"
+        podman push "ghcr.io/seungjin/leloi-linux-base:$new_tag"
         podman push "ghcr.io/seungjin/leloi-linux-base:latest"
+        podman rmi $temp_tag
     fi
 
 b:
@@ -147,7 +148,7 @@ b:
         new_tag=$(IFS=.; echo "${parts[*]}")
     fi
 
-    temp_tag="ghcr.io/seungjin/leloi-linux:$new_tag-temp"
+    temp_tag="localhost/leloi-linux:$new_tag-temp"
     podman build --no-cache -f Containerfile -t $temp_tag
 
     temp_tag_id=$(podman image ls $temp_tag --format '{{{{.Id}}')
@@ -158,9 +159,9 @@ b:
         echo "No newer image created."
         echo "Current latest is ghcr.io/seungjin/leloi-linux:$latest_tag."
     else
-        podman image tag $temp_tag "ghcr.io/seungjin/leloi-linux:$new_tag"
-        podman image tag rm $temp_tag
-        podman push "ghcr.io/seungjin/leloi-linux:$newtag"
+        podman tag $temp_tag "ghcr.io/seungjin/leloi-linux:$new_tag"
+        podman rmi $temp_tag
+        podman push "ghcr.io/seungjin/leloi-linux:$new_tag"
     fi
 
 c:
