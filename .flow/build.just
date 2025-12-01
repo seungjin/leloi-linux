@@ -17,7 +17,8 @@ default:
 
     buildah login "$CONTAINER_REPO" -u "$CONTAINER_REPO_USERNAME" -p "$CONTAINER_REPO_PASSWORD"
     buildah push ghcr.io/seungjin/leloi-linux-base:$next_tag-temp docker://ghcr.io/seungjin/leloi-linux-base:$next_tag
-    buildah rmi ghcr.io/seungjin/leloi-linux-base:$next_tag-temp
+    buildah push ghcr.io/seungjin/leloi-linux-base:$next_tag-temp docker://ghcr.io/seungjin/leloi-linux-base:latest
+    #buildah rmi ghcr.io/seungjin/leloi-linux-base:$next_tag-temp
 
 current_tag := `curl -s \
   -H "Authorization: Bearer $(curl -s "https://ghcr.io/token?scope=repository:seungjin/leloi-linux-base:pull" | jq -r '.token')" \
