@@ -1,4 +1,4 @@
 default:
     #/usr/bin/env bash
     cd /workspace/src
-    buildah bud -f Container-base -t foo:2
+    buildah bud -f Containerfile-base -t foo:2
