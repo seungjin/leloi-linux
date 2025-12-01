@@ -41,6 +41,7 @@ linux-firmware
 lm_sensors
 lxpolkit
 mako
+nftables
 mozilla-openh264
 net-tools
 network-manager-applet
@@ -83,3 +84,4 @@ xsel
 xset
 xwayland-satellite
 zsh
+buildah

@@ -42,6 +42,7 @@ COPY ./rootfs/ /
 # CONFIGURATION
 
 # sudo-rs
+# See justfile's sudo-rs.just
 RUN chown root:root /usr/local/bin/sudo
 RUN chmod 4755 /usr/local/bin/sudo
 
