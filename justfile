@@ -127,6 +127,7 @@ a:
         podman push "ghcr.io/seungjin/leloi-linux-base:$new_tag"
         podman push "ghcr.io/seungjin/leloi-linux-base:latest"
         podman rmi $temp_tag
+        echo "ghcr.io/seungjin/leloi-linux-base:$new_tag created"
     fi
 
 b:
@@ -162,6 +163,7 @@ b:
         podman tag $temp_tag "ghcr.io/seungjin/leloi-linux:$new_tag"
         podman rmi $temp_tag
         podman push "ghcr.io/seungjin/leloi-linux:$new_tag"
+        echo "ghcr.io/seungjin/leloi-linux:$new_tag created"
     fi
 
 c:
