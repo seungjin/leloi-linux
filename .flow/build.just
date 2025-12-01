@@ -1,4 +1,25 @@
 default:
     #!/usr/bin/env bash
     cd /workspace/src
-    buildah bud -f Containerfile-base -t foo:2
+    next_tag=$(( {{ current_tag }} + 1 ))
+    buildah bud -f Containerfile-base -t ghcr.io/seungjin/leloi-linux-base:$next_tag-temp
+    new_image_id=$(skopeo inspect --format '{{ .Digest }}' containers-storage:ghcr.io/seungjin/leloi-linux-base:$next_tag-temp)
+    current_repo_id=$(curl -s -H "Authorization: Bearer $(curl -s 'https://ghcr.io/token?scope=repository:seungjin/leloi-linux-base:pull' | jq -r '.token')" -H 'Accept: application/vnd.oci.image.manifest.v1+json' https://ghcr.io/v2/seungjin/leloi-linux-base/manifests/{{ current_tag}} | jq -r '.config.digest')
+
+    echo $new_image_id
+    echo $current_repo_id
+
+    if [[ "$new_image_id" == "$current_repo_id" ]]; then
+      buildah rmi "ghcr.io/seungjin/leloi-linux-base:$next_tag-temp"
+      echo "[{\"result\": \"No Image Created\"}]"
+      exit 0
+    fi
+
+    
+    #buildah login ghcr.io -useungjin -p
+    #buildah push ghcr.io/seungjin/leloi-linux-base:$next_tag-temp
+
+current_tag := `curl -s \
+  -H "Authorization: Bearer $(curl -s "https://ghcr.io/token?scope=repository:seungjin/leloi-linux-base:pull" | jq -r '.token')" \
+  https://ghcr.io/v2/seungjin/leloi-linux-base/tags/list \
+  | jq -r '.tags[]' | sort -V | grep -v latest | tail -1`
