@@ -15,8 +15,8 @@ base-image:
 
     rm -fr /tmp/work
     mkdir /tmp/work
-    skopeo copy containers-storage:ghcr.io/seungjin/leloi-linux-base:104-temp oci:/tmp/work/local:$next_tag-temp >/dev/null
-    skopeo copy docker://ghcr.io/seungjin/leloi-linux-base:104 oci:/tmp/work/remote:$current_tag >/dev/null
+    skopeo copy containers-storage:ghcr.io/seungjin/leloi-linux-base:$next_tag-temp oci:/tmp/work/local:$next_tag-temp >/dev/null
+    skopeo copy docker://ghcr.io/seungjin/leloi-linux-base:$current_tag oci:/tmp/work/remote:$current_tag >/dev/null
 
     if diff "/tmp/work/index.json" "/tmp/work/index.json" >/dev/null \
        && diff -r "/tmp/work/blobs" "/tmp/work/blobs" >/dev/null ; then
