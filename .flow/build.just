@@ -4,7 +4,8 @@ default:
     next_tag=$(( {{ current_tag }} + 1 ))
     buildah bud -f Containerfile-base -t ghcr.io/seungjin/leloi-linux-base:$next_tag-temp > /dev/null 2>&1
     local_image_id=$(skopeo inspect --format '{{ "{{" }} .Digest {{ "}}" }}' "containers-storage:ghcr.io/seungjin/leloi-linux-base:${next_tag}-temp")
-    remote_image_id=$(curl -s -H "Authorization: Bearer $(curl -s 'https://ghcr.io/token?scope=repository:seungjin/leloi-linux-base:pull' | jq -r '.token')" -H 'Accept: application/vnd.oci.image.manifest.v1+json' https://ghcr.io/v2/seungjin/leloi-linux-base/manifests/{{ current_tag }} | jq -r '.config.digest')
+	buildah pull ghcr.io/seungjin/leloi-linux-base:${current_tag}
+    remote_image_id=$(skopeo inspect --format '{{ "{{" }} .Digest {{ "}}" }}' "containers-storage:ghcr.io/seungjin/leloi-linux-base:${current_tag}")
 
     echo $local_image_id
     echo $remote_image_id
