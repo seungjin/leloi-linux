@@ -1,6 +1,6 @@
 default: base-image
 
-current_base_tag := `curl -s \
+current_tag := `curl -s \
   -H "Authorization: Bearer $(curl -s "https://ghcr.io/token?scope=repository:seungjin/leloi-linux-base:pull" | jq -r '.token')" \
   https://ghcr.io/v2/seungjin/leloi-linux-base/tags/list \
   | jq -r '.tags[]' | sort -V | grep -v latest | tail -1`
@@ -8,10 +8,10 @@ current_base_tag := `curl -s \
 base-image:
     #!/usr/bin/env bash
     cd /workspace/src
-    next_tag=$(( {{ current_base_tag }} + 1 ))
+    next_tag=$(( {{ current_tag }} + 1 ))
     buildah bud -f Containerfile-base -t ghcr.io/seungjin/leloi-linux-base:$next_tag-temp > /dev/null 2>&1
     local_image_id=$(skopeo inspect --format '{{ "{{" }} .Digest {{ "}}" }}' "containers-storage:ghcr.io/seungjin/leloi-linux-base:${next_tag}-temp")
-    buildah pull docker://ghcr.io/seungjin/leloi-linux-base:${current_base:tag}
+    buildah pull docker://ghcr.io/seungjin/leloi-linux-base:${current_tag}
     remote_image_id=$(skopeo inspect --format '{{ "{{" }} .Digest {{ "}}" }}' "containers-storage:ghcr.io/seungjin/leloi-linux-base:${current_tag}")
 
     echo $local_image_id
