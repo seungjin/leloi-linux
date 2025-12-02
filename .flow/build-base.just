@@ -20,7 +20,7 @@ base-image:
     echo $remote_image_id
 
     # If remote tag does NOT exist
-    if [[ -z "$local_repo_id" || "$local_repo_id" == "null" ]]; then
+    if [[ -z "$local_image_id" || "$local_image_id" == "null" ]]; then
       echo "[{\"result\": \"Local image not created\"}]"
       exit 1
     fi
