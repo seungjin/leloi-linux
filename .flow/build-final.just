@@ -13,11 +13,13 @@ base-image:
 
     buildah bud -f Containerfile -t ghcr.io/seungjin/leloi-linux:$next_tag-temp > /dev/null 2>&1
 
-    remote_layers=$(skopeo inspect docker://ghcr.io/seungjin/leloi-linux:$current_tag | jq -r '.Layers[]')
-    local_layers=$(skopeo inspect containers-storage:ghcr.io/seungjin/leloi-linux:$next_tag-temp | jq -r '.Layers[]')
+    rm -fr /tmp/work
+    mkdir /tmp/work
+    skopeo copy containers-storage:ghcr.io/seungjin/leloi-linux:$next_tag-temp oci:/tmp/work/local:$next_tag-temp >/dev/null
+    skopeo copy docker://ghcr.io/seungjin/leloi-linux:$current_tag oci:/tmp/work/remote:$current_tag >/dev/null
 
-
-    if diff <(printf "%s\n" "$local_layers") <(printf "%s\n" "$remote_layers") >/dev/null 2>&1; then
+    if diff "/tmp/work/index.json" "/tmp/work/index.json" >/dev/null \
+       && diff -r "/tmp/work/blobs" "/tmp/work/blobs" >/dev/null ; then
        # Images are the samep
        echo "[{\"result\": \"No Image Created\"}]"
        exit 0

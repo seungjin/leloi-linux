@@ -18,8 +18,8 @@ base-image:
     skopeo copy containers-storage:ghcr.io/seungjin/leloi-linux-base:$next_tag-temp oci:/tmp/work/local:$next_tag-temp >/dev/null
     skopeo copy docker://ghcr.io/seungjin/leloi-linux-base:$current_tag oci:/tmp/work/remote:$current_tag >/dev/null
 
-    if diff "/tmp/work/index.json" "/tmp/work/index.json" >/dev/null \
-       && diff -r "/tmp/work/blobs" "/tmp/work/blobs" >/dev/null ; then
+    if diff "/tmp/work/local/index.json" "/tmp/work/remote/index.json" >/dev/null \
+       && diff -r "/tmp/work/local/blobs" "/tmp/work/remote/blobs" >/dev/null ; then
        # Images are the samep
        echo "[{\"result\": \"No Image Created\"}]"
        exit 0
