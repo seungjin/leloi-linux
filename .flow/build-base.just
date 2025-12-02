@@ -9,7 +9,7 @@ base-image:
     #!/usr/bin/env bash
     cd /workspace/src
     next_tag=$(( {{ current_tag }} + 1 ))
-    current_tag ={{ current_tag }}
+    current_tag={{ current_tag }}
     buildah bud -f Containerfile-base -t ghcr.io/seungjin/leloi-linux-base:$next_tag-temp > /dev/null 2>&1
     local_image_id=$(skopeo inspect --format '{{ "{{" }} .Digest {{ "}}" }}' "containers-storage:ghcr.io/seungjin/leloi-linux-base:${next_tag}-temp")
     buildah pull docker://ghcr.io/seungjin/leloi-linux-base:${current_tag}
