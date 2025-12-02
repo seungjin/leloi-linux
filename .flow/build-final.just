@@ -11,7 +11,7 @@ final-image:
     next_tag=$(( {{ current_tag }} + 1 ))
     buildah bud -f Containerfile -t ghcr.io/seungjin/leloi-linux:$next_tag-temp > /dev/null 2>&1
     local_image_id=$(skopeo inspect --format '{{ "{{" }} .Digest {{ "}}" }}' "containers-storage:ghcr.io/seungjin/leloi-linux:${next_tag}-temp")
-    buildah pull docker://ghcr.io/seungjin/leloi-linux:${current_base:tag}
+    buildah pull docker://ghcr.io/seungjin/leloi-linux:${current_tag}
     remote_image_id=$(skopeo inspect --format '{{ "{{" }} .Digest {{ "}}" }}' "containers-storage:ghcr.io/seungjin/leloi-linux:${current_tag}")
 
     echo $local_image_id
