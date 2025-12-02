@@ -10,26 +10,17 @@ base-image:
     cd /workspace/src
     next_tag=$(( {{ current_tag }} + 1 ))
     current_tag={{ current_tag }}
-    buildah pull docker://ghcr.io/seungjin/leloi-linux:${current_tag}
 
-    buildah bud -f Containerfile-base -t ghcr.io/seungjin/leloi-linux:$next_tag-temp > /dev/null 2>&1
-    local_image_id=$(skopeo inspect --format '{{ "{{" }} .Digest {{ "}}" }}' "containers-storage:ghcr.io/seungjin/leloi-linux:${next_tag}-temp")
-    remote_image_id=$(skopeo inspect --format '{{ "{{" }} .Digest {{ "}}" }}' "containers-storage:ghcr.io/seungjin/leloi-linux:${current_tag}")
+    buildah bud -f Containerfile -t ghcr.io/seungjin/leloi-linux:$next_tag-temp > /dev/null 2>&1
 
-    echo $local_image_id
-    echo $remote_image_id
+    remote_layers=$(skopeo inspect docker://ghcr.io/seungjin/leloi-linux:$current_tag | jq -r '.Layers[]')
+    local_layers=$(skopeo inspect containers-storage:ghcr.io/seungjin/leloi-linux:$next_tag-temp | jq -r '.Layers[]')
 
-    # If remote tag does NOT exist
-    if [[ -z "$local_image_id" || "$local_image_id" == "null" ]]; then
-      echo "[{\"result\": \"Local image not created\"}]"
-      exit 1
-    fi
 
-    # Compare digests
-    if [[ "$local_image_id" == "$remote_repo_id" ]]; then
-      #buildah rmi "ghcr.io/seungjin/leloi-linux:$next_tag-temp"
-      echo "[{\"result\": \"No Image Created\"}]"
-      exit 0
+    if diff <(printf "%s\n" "$local_layers") <(printf "%s\n" "$remote_layers") >/dev/null 2>&1; then
+       # Images are the samep
+       echo "[{\"result\": \"No Image Created\"}]"
+       exit 0
     fi
 
     buildah login "$CONTAINER_REPO" -u "$CONTAINER_REPO_USERNAME" -p "$CONTAINER_REPO_PASSWORD"
