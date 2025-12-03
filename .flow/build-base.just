@@ -25,13 +25,13 @@ base-image:
     REMOTE_DIFFIDS=$(jq -r '.rootfs.diff_ids[]' "$TMP/blobs/sha256/${CONFIG_DIGEST#sha256:}")
 
     if diff <(echo "$LOCAL_DIFFIDS") <(echo "$REMOTE_DIFFIDS") >/dev/null; then
-        echo "[{\"result\": \"Image not created.\"}]"
+        echo "[{\"result\": \"Image not pushed.\"}]"
         exit 0
     fi
 
     skopeo login "$CONTAINER_REPO" -u "$CONTAINER_REPO_USERNAME" -p "$CONTAINER_REPO_PASSWORD"
-    skopeo copy containers-storage:localhost/seungjin/leloi-linux-base:$next_tag-temp docker://ghcr.io/seungjin/leloi-linux-base:$next_tag
-    skopeo copy containers-storage:localhost/seungjin/leloi-linux-base:$next_tag-temp docker://ghcr.io/seungjin/leloi-linux-base:latest
+    skopeo copy containers-storage:localhost/leloi-linux-base:$next_tag-temp docker://ghcr.io/seungjin/leloi-linux-base:$next_tag
+    skopeo copy containers-storage:localhost/leloi-linux-base:$next_tag-temp docker://ghcr.io/seungjin/leloi-linux-base:latest
     #buildah rmi ghcr.io/seungjin/leloi-linux-base:$next_tag-temp
     # echo "[{\"result\": \"New image: ghcr.io/seungjin/leloi-linux-base:$next_tag\"}]"
     exit 0
