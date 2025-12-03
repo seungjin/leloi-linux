@@ -11,23 +11,27 @@ base-image:
     next_tag=$(( {{ current_tag }} + 1 ))
     current_tag={{ current_tag }}
 
-    buildah bud -f Containerfile -t ghcr.io/seungjin/leloi-linux:$next_tag-temp > /dev/null 2>&1
+    buildah bud -f Containerfile -t leloi-linux:$next_tag-temp > /dev/null 2>&1
 
-    rm -fr /tmp/work
-    mkdir /tmp/work
-    skopeo copy containers-storage:ghcr.io/seungjin/leloi-linux:$next_tag-temp oci:/tmp/work/local:$next_tag-temp >/dev/null
-    skopeo copy docker://ghcr.io/seungjin/leloi-linux:$current_tag oci:/tmp/work/remote:$current_tag >/dev/null
+    LOCAL_DIFFIDS=$(buildah inspect --type image localhost/leloi-linux:$next_tag-temp | jq -r '.OCIv1.rootfs.diff_ids[]')
 
-    if diff "/tmp/work/local/index.json" "/tmp/work/remote/index.json" >/dev/null \
-       && diff -r "/tmp/work/local/blobs" "/tmp/work/remote/blobs" >/dev/null ; then
-       # Images are the samep
-       echo "[{\"result\": \"No Image Created\"}]"
-       exit 0
+    TMP=$(mktemp -d)
+    trap "rm -rf $TMP" EXIT
+    skopeo copy ghcr.io/seungjin/leloi-linux:$current_tag "oci:$TMP:img" >/dev/null
+
+    MANIFEST=$(jq -r '.manifests[0].digest' "$TMP/index.json")
+    CONFIG_DIGEST=$(jq -r '.config.digest' "$TMP/blobs/sha256/${MANIFEST#sha256:}")
+
+    REMOTE_DIFFIDS=$(jq -r '.rootfs.diff_ids[]' "$TMP/blobs/sha256/${CONFIG_DIGEST#sha256:}")
+
+    if diff <(echo "$LOCAL_DIFFIDS") <(echo "$REMOTE_DIFFIDS") >/dev/null; then
+        echo "[{\"result\": \"Image not pushed.\"}]"
+        exit 0
     fi
 
-    buildah login "$CONTAINER_REPO" -u "$CONTAINER_REPO_USERNAME" -p "$CONTAINER_REPO_PASSWORD"
-    buildah push ghcr.io/seungjin/leloi-linux:$next_tag-temp docker://ghcr.io/seungjin/leloi-linux:$next_tag
-    buildah push ghcr.io/seungjin/leloi-linux:$next_tag-temp docker://ghcr.io/seungjin/leloi-linux:latest
+    skopeo login "$CONTAINER_REPO" -u "$CONTAINER_REPO_USERNAME" -p "$CONTAINER_REPO_PASSWORD"
+    skopeo copy containers-storage:localhost/leloi-linux:$next_tag-temp docker://ghcr.io/seungjin/leloi-linux:$next_tag
+    skopeo copy containers-storage:localhost/leloi-linux:$next_tag-temp docker://ghcr.io/seungjin/leloi-linux:$latest
     #buildah rmi ghcr.io/seungjin/leloi-linux:$next_tag-temp
-    echo "[{\"result\": \"New image: ghcr.io/seungjin/leloi-linux:$next_tag\"}]"
+    # echo "[{\"result\": \"New image: ghcr.io/seungjin/leloi-linux:$next_tag\"}]"
     exit 0
