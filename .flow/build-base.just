@@ -17,7 +17,7 @@ base-image:
 
     TMP=$(mktemp -d)
     trap "rm -rf $TMP" EXIT
-    skopeo copy ghcr.io/seungjin/leloi-linux-base:$current_tag "oci:$TMP:img" >/dev/null
+    skopeo copy docker://ghcr.io/seungjin/leloi-linux-base:$current_tag "oci:$TMP:img" >/dev/null
 
     MANIFEST=$(jq -r '.manifests[0].digest' "$TMP/index.json")
     CONFIG_DIGEST=$(jq -r '.config.digest' "$TMP/blobs/sha256/${MANIFEST#sha256:}")
