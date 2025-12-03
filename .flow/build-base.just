@@ -15,8 +15,8 @@ base-image:
 
     buildah pull ghcr.io/seungjin/leloi-linux-base:$current_tag > /dev/null 2>&1
 
-    local_image_id=$(buildah inspect --format '{{.FromImageID}}' localhost/leloi-linux-base:$next_tag-temp)
-    remote_image_id=$(buildah inspect --format '{{.FromImageID}}' ghcr.io/seungjin/leloi-linux-base:$current_tag)
+    local_image_id=$(buildah inspect --format '{{ "{{" }} .FromImageID {{ "}}" }}' localhost/leloi-linux-base:$next_tag-temp)
+    remote_image_id=$(buildah inspect --format '{{ "{{" }} .FromImageID {{ "}}" }}' ghcr.io/seungjin/leloi-linux-base:$current_tag)
 
     echo $local_image_id
     echo $remote_image_id
