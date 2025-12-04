@@ -18,9 +18,6 @@ base-image:
     local_image_id=$(buildah inspect --format '{{ "{{" }} .FromImageID {{ "}}" }}' localhost/leloi-linux-base:$next_tag-temp)
     remote_image_id=$(buildah inspect --format '{{ "{{" }} .FromImageID {{ "}}" }}' ghcr.io/seungjin/leloi-linux-base:$current_tag)
 
-    echo $local_image_id
-    echo $remote_image_id
-
     if [[ "$local_image_id" == "$remote_image_id" ]]; then
         echo "[{\"result\": \"No image pushed\"}]" 
         exit 0
@@ -29,6 +26,5 @@ base-image:
     skopeo login "$CONTAINER_REPO" -u "$CONTAINER_REPO_USERNAME" -p "$CONTAINER_REPO_PASSWORD"
     skopeo copy containers-storage:localhost/leloi-linux-base:$next_tag-temp docker://ghcr.io/seungjin/leloi-linux-base:$next_tag
     skopeo copy containers-storage:localhost/leloi-linux-base:$next_tag-temp docker://ghcr.io/seungjin/leloi-linux-base:latest
-    #buildah rmi ghcr.io/seungjin/leloi-linux-base:$next_tag-temp
-    # echo "[{\"result\": \"New image: ghcr.io/seungjin/leloi-linux-base:$next_tag\"}]"
+    echo "[{\"result\": \"New image: ghcr.io/seungjin/leloi-linux-base:$next_tag\"}]"
     exit 0
