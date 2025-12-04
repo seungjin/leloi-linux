@@ -1,9 +1,6 @@
 default: base-image
 
-current_tag := `curl -s \
-  -H "Authorization: Bearer $(curl -s "https://ghcr.io/token?scope=repository:seungjin/leloi-linux-base:pull" | jq -r '.token')" \
-  https://ghcr.io/v2/seungjin/leloi-linux-base/tags/list \
-  | jq -r '.tags[]' | sort -V | grep -v latest | tail -1`
+current_tag := `skopeo list-tags docker://ghcr.io/seungjin/leloi-linux-base | jq -r '.Tags[]' | sort -V | tail -1``
 
 base-image:
     #!/usr/bin/env bash
