@@ -13,12 +13,10 @@ base-image:
 
     buildah bud --format docker --layers -f Containerfile-base -t leloi-linux-base:$next_tag-temp > /dev/null 2>&1
 
-    buildah pull ghcr.io/seungjin/leloi-linux-base:$current_tag > /dev/null 2>&1
+    local_image_id=$(skopeo inspect --format '{{ "{{" }} .Layers {{ "}}" }}' containers-storage:localhost/leloi-linux-base:$next_tag-temp)
+    remote_image_id=$(skopeo inspect --format '{{ "{{" }} .Layers {{ "}}" }}' docker://ghcr.io/seungjin/leloi-linux-base:$current_tag)
 
-    local_image_id=$(buildah inspect --format '{{ "{{" }} .FromImageID {{ "}}" }}' localhost/leloi-linux-base:$next_tag-temp)
-    remote_image_id=$(buildah inspect --format '{{ "{{" }} .FromImageID {{ "}}" }}' ghcr.io/seungjin/leloi-linux-base:$current_tag)
-
-    if [[ "$local_image_id" == "$remote_image_id" ]]; then
+    if diff <(echo "$local_image_id") <(echo "$remote_image_id") > /dev/null ; then
         echo "[{\"result\": \"No image pushed\"}]" 
         exit 0
     fi
