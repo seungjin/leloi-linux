@@ -1,12 +1,11 @@
 default: base-image
 
-current_tag := `skopeo list-tags docker://ghcr.io/seungjin/leloi-linux | jq -r '.Tags[]' | grep -v latest | sort -V | tail -1`
-
 base-image:
     #!/usr/bin/env bash
     cd /workspace/src
-    next_tag=$(( {{ current_tag }} + 1 ))
-    current_tag={{ current_tag }}
+
+    current_tag=$(skopeo list-tags docker://ghcr.io/seungjin/leloi-linux | jq -r '.Tags[]' | grep -v latest | sort -V | tail -1)
+    next_tag=$(( $current_tag + 1 ))
 
     buildah bud --format docker --layers -f Containerfile -t leloi-linux:$next_tag-temp > /dev/null 2>&1
 
