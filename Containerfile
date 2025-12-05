@@ -20,9 +20,6 @@ COPY ./rootfs/etc/sysusers.d/ /etc/sysusers.d/
 RUN systemd-sysusers 
 
 
-
-
-
 # INSTALL PACKAGES
 RUN grep "^[^#;]" /usr/local/share/bootc/packages-added | grep -E '^[A-Ea-e]' | xargs -r dnf -y install --allowerasing
 RUN grep "^[^#;]" /usr/local/share/bootc/packages-added | grep -E '^[F-Jf-j]' | xargs -r dnf -y install --allowerasing
