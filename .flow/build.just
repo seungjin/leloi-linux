@@ -1,6 +1,6 @@
 default: base-image
 
-current_tag := `skopeo list-tags docker://ghcr.io/seungjin/leloi-linux | jq -r '.Tags[]' | sort -V | tail -1`
+current_tag := `skopeo list-tags docker://ghcr.io/seungjin/leloi-linux | jq -r '.Tags[]' | grep -v latest | sort -V | tail -1`
 
 base-image:
     #!/usr/bin/env bash
