@@ -19,6 +19,6 @@ base-image:
 
     skopeo login "$CONTAINER_REPO" -u "$CONTAINER_REPO_USERNAME" -p "$CONTAINER_REPO_PASSWORD"
     skopeo copy containers-storage:localhost/leloi-linux:$next_tag-temp docker://ghcr.io/seungjin/leloi-linux:$next_tag
-    skopeo copy containers-storage:localhost/leloi-linux:$next_tag-temp docker://ghcr.io/seungjin/leloi-linux:latest
+    #skopeo copy containers-storage:localhost/leloi-linux:$next_tag-temp docker://ghcr.io/seungjin/leloi-linux:latest
     echo "[{\"result\": \"New image: ghcr.io/seungjin/leloi-linux:$next_tag\"}]"
     exit 0
