@@ -3,11 +3,14 @@ FROM ghcr.io/seungjin/leloi-linux-base:latest
 # source: https://gitlab.com/fedora/bootc/base-images
 # source: https://gitlab.com/fedora/bootc/base-images/-/blob/main/Containerfile?ref_type=heads
 
+ARG VERSION
+
 LABEL org.opencontainers.image.title="LeLoi Linux"
-LABEL org.opencontainers.image.description="LeLoi Linux's bootc container image"
+LABEL org.opencontainers.image.description="LeLoi Linux's bootc container's base image"
 LABEL org.opencontainers.image.authors="Seungjin Kim <seungjin@duck.com>"
 LABEL org.opencontainers.image.licenses=MIT
 LABEL org.opencontainers.image.source="https://github.com/seungjin/leloi-linux"
+LABEL org.opencontainers.image.version="$VERSION"
 
 # PREPARE PACKAGES
 COPY --chmod=0644 ./rootfs/usr/local/share/bootc/packages-added /usr/local/share/bootc/packages-added
