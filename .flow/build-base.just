@@ -8,7 +8,7 @@ base-image:
     next_tag=$(( $current_tag + 1 ))
 
     base_version=$(skopeo inspect docker://quay.io/fedora/fedora-bootc:43 | jq -r '.Labels["org.opencontainers.image.version"]')
-    this_version=$base_version+next_tag
+    this_version=$base_version+$next_tag
 
     buildah bud --format docker --layers --build-arg VERSION=$this_version -f Containerfile-base -t leloi-linux-base:$next_tag-temp > /dev/null 2>&1
 
