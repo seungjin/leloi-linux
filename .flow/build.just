@@ -7,7 +7,7 @@ base-image:
     current_tag=$(skopeo list-tags docker://ghcr.io/seungjin/leloi-linux | jq -r '.Tags[]' | grep -v latest | sort -V | tail -1)
     next_tag=$(( $current_tag + 1 ))
 
-    base_version=$(skopeo inspect docker://quay.io/fedora/fedora-bootc:43 | jq -r '.Labels["org.opencontainers.image.version"]')
+    base_version=$(skopeo inspect docker://ghcr.io/seungjin/leloi-linux-base:latest | jq -r '.Labels["org.opencontainers.image.version"]')
     this_version=$base_version+$next_tag
 
     buildah bud --format docker --layers --build-arg VERSION=$this_version -f Containerfile -t leloi-linux:$next_tag-temp > /dev/null 2>&1
