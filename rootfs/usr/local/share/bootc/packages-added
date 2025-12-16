@@ -65,6 +65,7 @@ swaybg
 swayidle
 swaylock
 sysstat
+tcpdump
 tmux
 usbutils
 virt-install
