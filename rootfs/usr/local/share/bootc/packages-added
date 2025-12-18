@@ -1,21 +1,11 @@
-# niri
-# pulseaudio-module-x11
-# pulseaudio-utils
-# wayland stuffs
-# xdg-desktop-portal-wlr
-#ibus-hangul
-#ibus-panel
-#ibus-wayland
-#kime
-ImageMagick
-NetworkManager
-NetworkManager-wifi
 audit
 blueman
 bluetoothctl
 brightnessctl
 btop
+buildah
 cmake
+edk2-ovmf
 emacs
 firewalld
 foot
@@ -26,9 +16,14 @@ gnome-disk-utility
 gnome-keyring
 grim
 gtk4-devel
+#ibus-hangul
+#ibus-panel
+#ibus-wayland
 ifuse
+ImageMagick
 inotify-tools
 iotop
+#kime
 libadwaita-devel
 libglvnd-gles
 libguestfs-tools
@@ -41,10 +36,13 @@ linux-firmware
 lm_sensors
 lxpolkit
 mako
-nftables
 mozilla-openh264
 net-tools
+NetworkManager
 network-manager-applet
+NetworkManager-wifi
+nftables
+# niri
 openh264
 opensc
 openssl
@@ -56,6 +54,8 @@ pipewire-utils
 podman-compose
 polybar
 powertop
+# pulseaudio-module-x11
+# pulseaudio-utils
 python3-libguestfs
 qemu-kvm
 rsync
@@ -64,6 +64,8 @@ stow
 swaybg
 swayidle
 swaylock
+swtpm
+swtpm-tools
 sysstat
 tcpdump
 tmux
@@ -74,15 +76,16 @@ virt-top
 virt-viewer
 vnstat
 waybar
+# wayland stuffs
 wdisplays
 wireguard-tools
 wl-clipboard
 wlr-randr
 xdg-desktop-portal-gnome
+# xdg-desktop-portal-wlr
 xinit
 xorg-x11-server-Xorg
 xsel
 xset
 xwayland-satellite
 zsh
-buildah
