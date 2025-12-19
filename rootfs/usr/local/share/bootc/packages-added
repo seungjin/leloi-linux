@@ -65,6 +65,7 @@ swaybg
 swayidle
 swaylock
 swtpm
+swtpm-selinux
 swtpm-tools
 sysstat
 tcpdump
