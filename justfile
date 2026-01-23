@@ -136,9 +136,10 @@ b:
 
     latest_tag=$(podman image ls ghcr.io/seungjin/leloi-linux --format '{{{{.Tag}}' | \
     grep -E '^[0-9]+$' | sort -n | tail -1)
+    // latest_tag=$(skopeo list-tags docker://ghcr.io/seungjin/leloi-linux | jq -r '.Tags[]' | sort -V | grep -v latest | tail -1)
 
     if [ -z "$latest_tag" ]; then
-        new_tag="1"
+        new_tag="tmp"
     else
         # Split version by '.' and increment last part
         IFS='.' read -ra parts <<< "$latest_tag"
