@@ -34,3 +34,4 @@ libreoffice*
 gnome-tour
 gnome-color-manager
 
+python3-dotenv+cli
