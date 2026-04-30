@@ -27,7 +27,7 @@ $ sudo podman run --rm -it --privileged --pull=newer \
 
 # Note 
 - As of Oct 29, 2025: leloi-linux-base:86 and leloi-linux:217 are Fedora 43 based.
- 
+- April 30th, 2026: leloi-linux-base goes to Fedora 44 based. 
 
 TODO:
   - 
