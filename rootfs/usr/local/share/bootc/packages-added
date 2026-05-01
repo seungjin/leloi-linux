@@ -91,7 +91,5 @@ xset
 xwayland-satellite
 zsh
 snapper
-libdisplay-info
-libdisplay-info-devel
-libdisplay-info-tools
+
 
