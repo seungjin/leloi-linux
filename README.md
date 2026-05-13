@@ -1,75 +1,101 @@
-# LeLoi Linux 
+# LeLoi Linux
 
-**LeLoi Linux** is a custom [bootc](https://containers.github.io/bootc/)-based Linux distribution tailored for my laptop, **LeLoi** (a ThinkPad P14s Gen 6 AMD). It is based on Fedora 44 and designed for a developer-centric, immutable, and reproducible workflow.
+[![Build Status](https://github.com/seungjin/leloi-linux/actions/workflows/daily-build.yml/badge.svg)](https://github.com/seungjin/leloi-linux/actions)
 
-## Hardware Specifications
-- **Model:** ThinkPad P14s Gen 6 AMD ([PSREF](https://psref.lenovo.com/Product/ThinkPad/ThinkPad_P14s_Gen_6_AMD))
+**LeLoi Linux** is a custom, container-native [bootc](https://containers.github.io/bootc/)-based Linux distribution tailored for the **ThinkPad P14s Gen 6 AMD** (code-named *LeLoi*). It provides a developer-centric, immutable, and fully reproducible environment based on Fedora 44.
+
+## 🚀 Overview
+
+LeLoi Linux leverages the power of `bootc` to manage the operating system as a container image. This allows for transactional updates, easy rollbacks, and a consistent environment across multiple machines or reinstalls.
+
+- **Base OS:** Fedora 44 (via `fedora-bootc:44`)
+- **Desktop:** [COSMIC Desktop Environment](https://github.com/pop-os/cosmic-epoch)
+- **Philosophy:** Immutable core, containerized workloads, and hardware-optimized defaults.
+
+## ✨ Key Features
+
+- **Immutable & Atomic:** OS updates are delivered as container images, ensuring atomicity and easy rollbacks via `bootc` and `snapper`.
+- **Advanced Storage:** Btrfs-focused layout with subvolumes (`/`, `/var`, `/var/home`) and full-disk encryption via LUKS2.
+- **Developer First:** Pre-loaded with essential tools like Emacs, Zsh, Podman, Buildah, KVM/QEMU, and more.
+- **Security Hardened:** 
+  - Uses `sudo-rs` for safer privilege escalation.
+  - Locked root account by default.
+  - Firewalld enabled with sensible defaults.
+- **Optimized Performance:** Tailored for AMD Ryzen™ AI 9 HX PRO 370 with specific kernel arguments and power management.
+- **Modern Stack:** Uses `dnf5` for faster package management and `systemd-sysusers` for declarative user management.
+
+## 💻 Hardware Specifications
+
+Designed and optimized for the [ThinkPad P14s Gen 6 AMD](https://psref.lenovo.com/Product/ThinkPad/ThinkPad_P14s_Gen_6_AMD):
+
 - **CPU:** AMD Ryzen™ AI 9 HX PRO 370
-- **Display:** 14" WUXGA (1920 × 1200) IPS 60Hz
-- **Keymap:** Optimized for US Colemak
+- **Display:** 14" WUXGA (1920 × 1200) IPS, 400nits, 60Hz
+- **Memory:** 64GB LPDDR5x-7500
+- **Keymap:** US Colemak (Software-level optimization)
 
-## Key Features
-- **Immutable Base:** Built on `fedora-bootc:44`.
-- **Desktop Environment:** Includes the [COSMIC Desktop Environment](https://github.com/pop-os/cosmic-epoch).
-- **Storage:** Btrfs-focused layout with subvolumes (`/`, `/var`, `/var/home`) and LUKS2 encryption.
-- **Developer Tools:** Pre-installed with Emacs, Zsh, Podman, Buildah, KVM/QEMU, and more.
-- **Security:** `sudo-rs` for safer privilege escalation, firewalld, and locked root account.
-- **Modern Defaults:** Uses `dnf5`, `systemd-sysusers`, and `greetd`.
-- **Snapshots:** Integrated `snapper` for system rollback capability.
+## 🏗️ Project Architecture
 
-## Getting Started
+The project uses a two-layer build strategy to optimize build times and separation of concerns:
 
-This project uses `just` as a command runner for common tasks.
+1.  **Base Image (`leloi-linux-base`):** Contains the core Fedora 44 bootc system and the COSMIC Desktop Environment.
+2.  **Final Image (`leloi-linux`):** Adds user-specific configurations, additional developer tools, and system overlays.
 
-### 1. Build the Container Images
+## 🛠️ Getting Started
 
-You can build the images using `podman` directly or use the provided `just` targets:
+This project uses `just` as a command runner.
 
-- **Base Image:**
+### Prerequisites
+- `podman`
+- `just`
+- `bootc-image-builder` (run via podman)
+
+### 1. Build the Images
+
+You can build and push the images to GHCR using the following shortcuts:
+
+- **Build Base Image:**
   ```bash
-  just a  # Builds, tags, and pushes the base image (leloi-linux-base)
+  just a  # Increments version, builds, and pushes ghcr.io/seungjin/leloi-linux-base
   ```
-  *Or manually:* `podman build -f Containerfile-base -t leloi-linux-base .`
-
-- **Final Image:**
+- **Build Final Image:**
   ```bash
-  just b  # Builds, tags, and pushes the final image (leloi-linux)
+  just b  # Increments version, builds, and pushes ghcr.io/seungjin/leloi-linux
   ```
-  *Or manually:* `sudo podman build -t leloi-linux .`
 
-### 2. Create a Bootable ISO
+### 2. Generate Bootable Media (ISO)
 
-To generate an ISO for bare-metal installation:
+To generate a bare-metal installation ISO:
+
+- **From existing local image:**
+  ```bash
+  just build2  # Builds final image and then generates ISO
+  ```
+- **ISO Only (using base image):**
+  ```bash
+  just build iso
+  ```
+The output ISO will be placed in the `./output` directory.
+
+### 3. Apply Updates to a Running System
+
+If you are already running LeLoi Linux, you can "push" your local changes to your system:
 ```bash
-just build iso  # Generates ISO from the latest base image
+just c  # Saves local image, loads it into system storage, and performs 'bootc switch'
 ```
-Alternatively, to build the final image and generate an ISO in one step:
-```bash
-just build2
-```
-The output ISO will be located in the `./output` directory.
 
-### 3. Apply Updates Locally
+## 📁 Project Structure
 
-If you are already running LeLoi Linux and want to switch to a newly built local image:
-```bash
-just c
-```
-*Note: This saves the image, loads it into `containers-storage`, and performs a `bootc switch`.*
-
-## Project Structure
-
-- `Containerfile-base`: Defines the base OS (Fedora 44 + COSMIC).
-- `Containerfile`: Layered image adding extra packages and configurations.
-- `rootfs/`: Overlay files for the root filesystem (systemd services, config files, etc.).
-- `config.toml`: Configuration for `bootc-image-builder`, including the Kickstart (`ks.cfg`) logic.
-- `justfile`: Automation for building, tagging, and pushing images.
+- `Containerfile-base`: Defines the Fedora 44 + COSMIC foundation.
+- `Containerfile`: The final layer with extra packages and personal tweaks.
+- `rootfs/`: A collection of overlay files (systemd services, configs, etc.) that are copied into the image.
+- `config.toml`: Configuration for the `bootc-image-builder` (Kickstart logic, partitioning).
+- `justfile`: Automation logic for the entire lifecycle.
 - `scripts/`: Helper scripts for initial setup and user configuration.
+- `.flow/`: Specialized build logic and alternative workflows.
 
-## Note 
-- As of Oct 29, 2025: `leloi-linux-base:86` and `leloi-linux:217` are Fedora 43 based.
-- April 30th, 2026: `leloi-linux-base` transitioned to Fedora 44 base.
+## 📝 License
 
-## TODO
-- [ ] Refine COSMIC configuration.
-- [ ] Automate more of the first-boot setup.
+This project is licensed under the **MIT License**. See the `LICENSE` file for details.
+
+---
+*Last Updated: May 2026*

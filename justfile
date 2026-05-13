@@ -91,6 +91,7 @@ clean:
     trash ./output
     mkdir ./output
 
+# Build, tag, and push the base image (ghcr.io/seungjin/leloi-linux-base)
 a:
     #!/usr/bin/env bash
     set -e
@@ -130,6 +131,7 @@ a:
         echo "ghcr.io/seungjin/leloi-linux-base:$new_tag created"
     fi
 
+# Build, tag, and push the final image (ghcr.io/seungjin/leloi-linux)
 b:
     #!/usr/bin/env bash
     set -e
@@ -167,6 +169,7 @@ b:
         echo "ghcr.io/seungjin/leloi-linux:$new_tag created"
     fi
 
+# Apply local changes to the running system (saves, loads, and bootc switch)
 c:
     #!/usr/local/bin/fish
     set VER (podman image ls ghcr.io/seungjin/leloi-linux --format '{{{{.Tag}}' | \
