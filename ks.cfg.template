@@ -24,7 +24,7 @@ clearpart --all
 part /boot --fstype=ext4 --size=1024
 part /boot/efi --fstype=efi --grow --maxsize=587 --size=587
 
-part pv.01 --size=204800 --grow --encrypted --passphrase=MMXX2,99,22,500,
+part pv.01 --size=204800 --grow --encrypted --passphrase={{ (ds "secrets").disk_encryption_key }}
 
 # Create a Btrfs volume on top of the encrypted device
 btrfs --label=root --data=single --metadata=single pv.01

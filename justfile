@@ -172,3 +172,6 @@ c:
     set VER (podman image ls ghcr.io/seungjin/leloi-linux --format '{{{{.Tag}}' | \
         grep -E '^[0-9]+$' | sort -n | tail -1) 
     podman save -o /tmp/leloi-linux-$VER.tar ghcr.io/seungjin/leloi-linux:$VER && sudo podman load -i /tmp/leloi-linux-$VER.tar && /usr/bin/rm -fr /tmp/lelo-linux-$VER.tar && sudo bootc switch --transport containers-storage ghcr.io/seungjin/leloi-linux:$VER
+
+render-ks:
+    gomplate -d secrets=.secrets?type=application/x-env -f ks.cfg.template -o ks.cfg
