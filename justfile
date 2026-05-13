@@ -136,9 +136,7 @@ b:
     #!/usr/bin/env bash
     set -e
 
-    latest_tag=$(podman image ls ghcr.io/seungjin/leloi-linux --format '{{{{.Tag}}' | \
-    grep -E '^[0-9]+$' | sort -n | tail -1)
-    // latest_tag=$(skopeo list-tags docker://ghcr.io/seungjin/leloi-linux | jq -r '.Tags[]' | sort -V | grep -v latest | tail -1)
+    latest_tag=$(skopeo list-tags docker://ghcr.io/seungjin/leloi-linux | jq -r '.Tags[]' | sort -V | grep -v latest | tail -1)
 
     if [ -z "$latest_tag" ]; then
         new_tag="tmp"
@@ -166,6 +164,8 @@ b:
         podman tag $temp_tag "ghcr.io/seungjin/leloi-linux:$new_tag"
         podman rmi $temp_tag
         podman push "ghcr.io/seungjin/leloi-linux:$new_tag"
+        skopeo copy docker://ghcr.io/seungjin/leloi-linux:$new_tag \
+                    docker://ghcr.io/seungjin/leloi-linux:latest
         echo "ghcr.io/seungjin/leloi-linux:$new_tag created"
     fi
 
