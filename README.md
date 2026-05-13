@@ -1,7 +1,5 @@
 # LeLoi Linux
 
-[![Build Status](https://github.com/seungjin/leloi-linux/actions/workflows/daily-build.yml/badge.svg)](https://github.com/seungjin/leloi-linux/actions)
-
 **LeLoi Linux** is a custom, container-native [bootc](https://containers.github.io/bootc/)-based Linux distribution tailored for the **ThinkPad P14s Gen 6 AMD** (code-named *LeLoi*). It provides a developer-centric, immutable, and fully reproducible environment based on Fedora 44.
 
 ## 🚀 Overview
