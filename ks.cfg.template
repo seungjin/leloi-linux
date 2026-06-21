@@ -18,7 +18,7 @@ ignoredisk --only-use=nvme0n1
 clearpart --all 
 
 # autopart creates swap partition automatically. Decided not to use.
-# autopart --type=btrfs --encrypted --passphrase=MMXX2,99,22,500,
+# autopart --type=btrfs --encrypted --passphrase=use-this-if-you-set-disk-pass-at-kickstart-stage
 
 # Create boot partition (not encrypted)
 part /boot --fstype=ext4 --size=1024
