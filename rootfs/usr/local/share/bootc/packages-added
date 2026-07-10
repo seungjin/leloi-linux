@@ -92,5 +92,6 @@ xwayland-satellite
 zsh
 snapper
 crun-krun
+xdg-desktop-portal-gtk
 
 
