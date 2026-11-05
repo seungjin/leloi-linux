@@ -1,10 +1,10 @@
 NAME="Fedora Linux"
-VERSION="45 (LeLoi Bootc)"
+VERSION="44 (LeLoi Bootc)"
 RELEASE_TYPE=stable
 ID=fedora
-VERSION_ID=45
+VERSION_ID=44
 VERSION_CODENAME=""
-PRETTY_NAME="Fedora Linux 45 (LeLoi Bootc)"
+PRETTY_NAME="Fedora Linux 44 (LeLoi Bootc)"
 ANSI_COLOR="0;38;2;60;110;180"
 LOGO=fedora-logo-icon
 DEFAULT_HOSTNAME="LeLoi"

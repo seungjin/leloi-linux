@@ -27,7 +27,7 @@ RUN systemd-sysusers
 RUN grep "^[^#;]" /usr/local/share/bootc/packages-added | grep -E '^[A-Ea-e]' | xargs -r dnf -y install --allowerasing
 RUN grep "^[^#;]" /usr/local/share/bootc/packages-added | grep -E '^[F-Jf-j]' | xargs -r dnf -y install --allowerasing
 RUN grep "^[^#;]" /usr/local/share/bootc/packages-added | grep -E '^[K-Ok-o]' | xargs -r dnf -y install --allowerasing
-RUN grep "^[^#;]" /usr/local/share/bootc/packages-added | grep -E '^[P-Tp-t]' | xargs -r dnf -y install --allowerasing
+RUN grep "^[^#;]" /usr/local/share/bootc/packages-added | grep -E '^[P-Tp-t]' | xargs -r dnf -y install --allowerasing 
 RUN grep "^[^#;]" /usr/local/share/bootc/packages-added | grep -E '^[U-Zu-z]' | xargs -r dnf -y install --allowerasing
 RUN grep "^[^#;]" /usr/local/share/bootc/packages-added | grep -E '^[0-9]' | xargs -r dnf -y install --allowerasing
 
