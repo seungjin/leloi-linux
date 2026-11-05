@@ -93,5 +93,5 @@ zsh
 snapper
 crun-krun
 xdg-desktop-portal-gtk
-
-
+device-mapper-libs
+libnl3
