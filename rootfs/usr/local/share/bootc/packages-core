@@ -40,3 +40,5 @@ groff-base
 dbus
 setup
 fedora-release-common
+python3-tuned
+
