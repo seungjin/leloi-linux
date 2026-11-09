@@ -13,9 +13,8 @@ LABEL org.opencontainers.image.source="https://github.com/seungjin/leloi-linux"
 LABEL org.opencontainers.image.version="$VERSION"
 
 # PREPARE PACKAGES
-COPY --chmod=0644 ./rootfs/usr/local/share/bootc/packages-added /usr/local/share/bootc/packages-added
-COPY --chmod=0644 ./rootfs/usr/local/share/bootc/packages-removed /usr/local/share/bootc/packages-removed
-COPY --chmod=0644 ./rootfs/etc/yum.repos.d/* /etc/yum.repos.d/
+COPY --chmod=0644 ./rootfs/usr/local/share/bootc/ /usr/local/share/bootc/
+COPY --chmod=0644 ./rootfs/etc/yum.repos.d/ /etc/yum.repos.d/
 
 
 # systemd-sysusers
@@ -23,18 +22,50 @@ COPY ./rootfs/etc/sysusers.d/ /etc/sysusers.d/
 RUN systemd-sysusers 
 
 
-# INSTALL PACKAGES
-RUN grep "^[^#;]" /usr/local/share/bootc/packages-added | grep -E '^[A-Ea-e]' | xargs -r dnf -y install --allowerasing
-RUN grep "^[^#;]" /usr/local/share/bootc/packages-added | grep -E '^[F-Jf-j]' | xargs -r dnf -y install --allowerasing
-RUN grep "^[^#;]" /usr/local/share/bootc/packages-added | grep -E '^[K-Ok-o]' | xargs -r dnf -y install --allowerasing
-RUN grep "^[^#;]" /usr/local/share/bootc/packages-added | grep -E '^[P-Tp-t]' | xargs -r dnf -y install --allowerasing 
-RUN grep "^[^#;]" /usr/local/share/bootc/packages-added | grep -E '^[U-Zu-z]' | xargs -r dnf -y install --allowerasing
-RUN grep "^[^#;]" /usr/local/share/bootc/packages-added | grep -E '^[0-9]' | xargs -r dnf -y install --allowerasing
+RUN dnf upgrade -y --refresh --setopt=install_weak_deps=False \
+    && dnf clean all
 
-# REMOVE PACKAGES
-RUN cat /usr/local/share/bootc/packages-removed | grep "^[^#;]" | xargs -r dnf -y remove
-RUN dnf -y autoremove
-RUN dnf clean all
+# Core System Install
+RUN set -e; \
+    PKGS=$(sed -e 's/#.*//' -e 's/;.*//' /usr/local/share/bootc/packages-core | tr '\n' ' '); \
+    if [ -n "$PKGS" ]; then \
+        dnf install -y --setopt=strict=0 --setopt=install_weak_deps=False --allowerasing $PKGS \
+        && dnf clean all; \
+    fi
+
+# Desktop / GUI Install
+RUN set -e; \
+    PKGS=$(sed -e 's/#.*//' -e 's/;.*//' /usr/local/share/bootc/packages-desktop | tr '\n' ' '); \
+    if [ -n "$PKGS" ]; then \
+        dnf install -y --setopt=strict=0 --setopt=install_weak_deps=False --allowerasing $PKGS \
+        && dnf clean all; \
+    fi
+
+# Dev Tools & Virtualization Install
+RUN set -e; \
+    PKGS=$(sed -e 's/#.*//' -e 's/;.*//' /usr/local/share/bootc/packages-dev-virt | tr '\n' ' '); \
+    if [ -n "$PKGS" ]; then \
+        dnf install -y --setopt=strict=0 --setopt=install_weak_deps=False --allowerasing $PKGS \
+        && dnf clean all; \
+    fi
+
+# Extra Utilities Install
+RUN set -e; \
+    PKGS=$(sed -e 's/#.*//' -e 's/;.*//' /usr/local/share/bootc/packages-extra | tr '\n' ' '); \
+    if [ -n "$PKGS" ]; then \
+        dnf install -y --setopt=strict=0 --setopt=install_weak_deps=False --allowerasing $PKGS \
+        && dnf clean all; \
+    fi
+
+# Removals & Final Cleanup
+RUN set -e; \
+    PKGS=$(sed -e 's/#.*//' -e 's/;.*//' /usr/local/share/bootc/packages-removed | tr '\n' ' '); \
+    if [ -n "$PKGS" ]; then \
+        dnf remove -y $PKGS; \
+    fi \
+    && dnf autoremove -y \
+    && dnf clean all \
+    && rm -rf /var/cache/dnf /var/cache/libdnf
 
 # root filesystem copy
 COPY ./rootfs/ /
@@ -43,8 +74,8 @@ COPY ./rootfs/ /
 
 # sudo-rs
 # See justfile's sudo-rs.just
-RUN chown root:root /usr/local/bin/sudo
-RUN chmod 4755 /usr/local/bin/sudo
+# RUN chown root:root /usr/local/bin/sudo
+# RUN chmod 4755 /usr/local/bin/sudo
 
 #COPY --chmod=0644 ./rootfs/etc/skel/leloi-bootc /etc/skel/.bashrc.d/leloi-bootc
 #COPY --chmod=0600 ./rootfs/usr/lib/ostree/auth.json /usr/lib/ostree/auth.json

@@ -1,0 +1,41 @@
+blueman
+bluetoothctl
+foot
+fuzzel
+gnome-disk-utility
+gnome-keyring
+grim
+#ibus-hangul
+#ibus-panel
+#ibus-wayland
+ifuse
+ImageMagick
+#kime
+librewolf
+lxpolkit
+mako
+mozilla-openh264
+network-manager-applet
+# niri
+openh264
+pavucontrol
+pinentry-gnome3
+pinentry-tty
+polybar
+stow
+swaybg
+swayidle
+swaylock
+waybar
+# wayland stuffs
+wdisplays
+wl-clipboard
+wlr-randr
+xdg-desktop-portal-gnome
+# xdg-desktop-portal-wlr
+xinit
+xorg-x11-server-Xorg
+xsel
+xset
+xwayland-satellite
+xdg-desktop-portal-gtk
